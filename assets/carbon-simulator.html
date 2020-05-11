@@ -7,6 +7,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="carbon-simulator.css">
   <style>
+    @font-face {
+      font-family: "Maison Neue";
+      font-weight: 700;
+      src: url("MaisonNeue-Bold.ttf");
+    }
+    @font-face {
+      font-family: "Maison Neue";
+      font-weight: 500;
+      src: url("MaisonNeue-Medium.ttf");
+    }
+    @font-face {
+      font-family: "Recoleta Alt";
+      font-weight: 600;
+      src: url("RecoletaAlt-SemiBold.otf");
+    }
+    @font-face {
+      font-family: "Sweet Sans Pro";
+      font-weight: 700;
+      src: url("SweetSansPro-Bold.otf");
+    }
+
     body {
       padding: 0;
       margin: 0;
@@ -480,13 +501,13 @@
             <g id="BG" opacity="0.100000001" transform="translate(0.000000, -4.000000)" fill="url(#pattern-1)">
                 <rect id="Kraft-Paper---BG" opacity="0.65" x="0" y="0" width="1458" height="1286"></rect>
             </g>
-            <g id="Slider" transform="translate(296.000000, 422.000000)">
-                <g id="Min-Value" transform="translate(0.000000, 131.000000)" fill="#18463E" font-family="Helvetica" font-size="21" font-weight="normal" line-spacing="36">
+            <g id="Slider" transform="translate(296.000000, 422.000000)" font-family="Maison Neue" font-weight="500">
+                <g id="Min-Value" transform="translate(0.000000, 131.000000)" fill="#18463E" font-size="21" line-spacing="36">
                     <text id="0-lbs">
                         <tspan x="20.8208008" y="20">0 lbs</tspan>
                     </text>
                 </g>
-                <g id="Max-Value" transform="translate(772.000000, 130.000000)" fill="#18463E" font-family="Helvetica" font-size="21" font-weight="normal" line-spacing="36">
+                <g id="Max-Value" transform="translate(772.000000, 130.000000)" fill="#18463E" font-size="21" line-spacing="36">
                     <text id="75">
                         <tspan x="31.3208008" y="20">75</tspan>
                     </text>
@@ -506,7 +527,7 @@
                             <use xlink:href="#path-3"></use>
                         </mask>
                         <use id="Value-Indicator-Teardop" fill="#6CA342" xlink:href="#path-3"></use>
-                        <text id="Pounds" mask="url(#mask-4)" font-family="Helvetica" font-size="21" font-weight="normal" line-spacing="20" letter-spacing="0.375" fill="#F5F3EE">
+                        <text id="Pounds" mask="url(#mask-4)" font-size="21" line-spacing="20" letter-spacing="0.375" fill="#F5F3EE">
                             <tspan x="19" y="74">37</tspan>
                         </text>
                         <g id="Wholesome-Logo" mask="url(#mask-4)">
@@ -537,57 +558,57 @@
                     </g>
                 </g>
                 <g id="Data" transform="translate(130.000000, 212.000000)" font-family="Helvetica" font-weight="normal">
-                    <text id="of-harmful-carbon-ca" font-size="18" line-spacing="24" fill="#003C5B">
+                    <text id="of-harmful-carbon-ca" font-family="Sweet Sans Pro" font-weight="700" font-size="18" line-spacing="24" fill="#003C5B">
                         <tspan x="433.464355" y="91">of harmful carbon </tspan>
                         <tspan x="432.958984" y="115">captured per year</tspan>
                     </text>
-                    <text id="240-lbs" font-size="48" line-spacing="36" fill="#003C5B">
+                    <text id="240-lbs" font-family="Recoleta Alt" font-weight="600" font-size="48" line-spacing="36" fill="#003C5B">
                         <tspan x="414" y="74">240 lbs</tspan>
                     </text>
                     <text id="=" font-size="100" fill="#6CA342">
                         <tspan x="265" y="97">=</tspan>
                     </text>
-                    <text id="of-Wholesome-Meat" font-size="18" line-spacing="24" fill="#003C5B">
+                    <text id="of-Wholesome-Meat" font-family="Sweet Sans Pro" font-weight="700" font-size="18" line-spacing="24" fill="#003C5B">
                         <tspan x="8.46679688" y="91">of Wholesome Meat</tspan>
                     </text>
-                    <text id="37-lbs" font-size="48" line-spacing="36" fill="#003C5B">
+                    <text id="37-lbs" font-family="Recoleta Alt" font-weight="600" font-size="48" line-spacing="36" fill="#003C5B">
                         <tspan x="11" y="74">37 lbs</tspan>
                     </text>
                 </g>
             </g>
             <g id="Booster" transform="translate(511.000000, 762.000000)">
-                <g id="Group-65" transform="translate(13.000000, 114.500000)">
+                <g id="Group-65" font-family="Maison Neue" font-weight="700" transform="translate(13.000000, 114.500000)">
                     <g id="Group-58" transform="translate(0.000000, 0.500000)">
                         <rect id="Rectangle" fill="#6CA342" x="0" y="0" width="173.697674" height="62" rx="31"></rect>
-                        <text id="Fake-Meat" font-family="Helvetica" font-size="18" font-weight="normal" line-spacing="16" fill="#F5F3EE">
+                        <text id="Fake-Meat" font-size="18" line-spacing="16" fill="#F5F3EE">
                             <tspan x="38" y="34">Fake Meat</tspan>
                         </text>
                         <rect id="Rectangle-Copy-6" fill="#ADBFA0" x="196" y="0" width="191.744186" height="62" rx="31"></rect>
-                        <text id="Feed-Lot-Meat" font-family="Helvetica" font-size="18" font-weight="normal" line-spacing="21" fill="#18463E">
+                        <text id="Feed-Lot-Meat" font-size="18" line-spacing="21" fill="#18463E">
                             <tspan x="225" y="32">Feed Lot Meat</tspan>
                         </text>
                     </g>
-                    <text id="x2-Boost" font-family="Helvetica" font-size="14" font-weight="normal" line-spacing="16" fill="#18463E">
+                    <text id="x2-Boost" font-size="14" line-spacing="16" fill="#18463E">
                         <tspan x="45.9526367" y="49.2978516">x2 Boost</tspan>
                     </text>
-                    <text id="x10-Boost" opacity="0.620326451" font-family="Helvetica" font-size="14" font-weight="normal" line-spacing="16" fill="#454545">
+                    <text id="x10-Boost" opacity="0.620326451" font-size="14" line-spacing="16" fill="#454545">
                         <tspan x="250" y="53">x10 Boost</tspan>
                     </text>
                 </g>
-                <text id="Switch-to-Wholesome" font-family="Helvetica" font-size="16" font-weight="normal" line-spacing="21" fill="#18463E">
+                <text id="Switch-to-Wholesome" font-family="Sweet Sans Pro" font-weight="700" font-size="16" font-weight="normal" line-spacing="21" fill="#18463E">
                     <tspan x="50.59375" y="91">SWITCH TO WHOLESOME MEATS FROM:</tspan>
                 </text>
-                <text id="Boost-your-carbon-ca" font-family="Helvetica" font-size="18" font-weight="normal" line-spacing="21" fill="#0072C0">
+                <text id="Boost-your-carbon-ca" font-family="Sweet Sans Pro" font-weight="700" font-size="18" font-weight="normal" line-spacing="21" fill="#0072C0">
                     <tspan x="0" y="61">BOOST YOUR CARBON CAPTURING POWER</tspan>
                 </text>
-                <g id="Group-66" transform="translate(197.000000, 0.000000)" fill="#656D79">
+                <g id="Group-66" transform="translate(197.000000, 0.000000)" fill="#0072C0">
                     <path d="M9.92121212,2.41153898e-13 C8.41757576,0.00675256069 7.06121212,0.921298015 6.31818182,2.2291768 C2.12545455,9.60432832 1.72252784e-14,14.6776617 1.72252784e-14,17.310995 C1.72252784e-14,21.4643283 2.56060606,25.0285707 6.18545455,26.5122071 C6.99575758,26.8443283 7.88666667,26.270995 7.88666667,25.3952374 C7.88666667,24.900692 7.58484848,24.4588738 7.12606061,24.2734192 C4.37333333,23.1570556 2.42424242,20.4600859 2.42424242,17.310995 C2.42424242,15.1855404 4.63090909,10.091601 8.48060606,3.32978286 C8.74909091,2.85766165 9.21454545,2.49220711 9.75515152,2.43463135 C10.4193939,2.36251014 11.0284848,2.67826771 11.3515152,3.24432832 C15.2315152,10.0497829 17.4569697,15.1770556 17.4569697,17.310995 C17.4569697,21.4552374 14.0848485,24.8273586 9.94060606,24.8273586 C9.55090909,24.8273586 9.17090909,24.7891768 8.79757576,24.731601 C8.76060606,24.7255404 8.72848485,24.7534192 8.72848485,24.7903889 L8.72848485,27.1152374 C8.72848485,27.1467526 8.75151515,27.1728132 8.78242424,27.1764495 C9.1630303,27.221298 9.54848485,27.251601 9.94060606,27.251601 C15.4218182,27.251601 19.8812121,22.7922071 19.8812121,17.310995 C19.8812121,14.6564495 17.72,9.51947983 13.4581818,2.04432832 C12.7248485,0.758267712 11.4018182,-0.00658077264 9.92121212,2.41153898e-13 Z" id="Fill-42"></path>
                     <path d="M11.1529091,31.0879041 L8.72866667,31.0879041 L8.72866667,12.9891162 C8.72866667,12.3194192 9.27109091,11.776995 9.94018182,11.776995 C10.6098788,11.776995 11.1529091,12.3194192 11.1529091,12.9891162 L11.1529091,31.0879041 Z" id="Fill-43"></path>
                     <path d="M6.0849697,16.3502677 C5.61163636,15.8763283 5.61163636,15.1096617 6.08557576,14.6363283 C6.55890909,14.1623889 7.32618182,14.1623889 7.79951515,14.6363283 L9.88860606,16.7254192 C10.3613333,17.1987526 10.3613333,17.9660253 9.888,18.4393586 C9.41466667,18.912692 8.64739394,18.912692 8.17406061,18.4393586 L6.0849697,16.3502677 Z" id="Fill-44"></path>
                     <path d="M9.88812121,20.5280859 L11.9772121,18.439601 C12.4511515,17.9656617 13.2178182,17.9656617 13.6911515,18.439601 C14.1650909,18.9129344 14.1644848,19.679601 13.6911515,20.1535404 L11.6020606,22.2420253 C11.1293333,22.7153586 10.3614545,22.7153586 9.88812121,22.2420253 C9.41539394,21.768692 9.41539394,21.0014192 9.88812121,20.5280859 Z" id="Fill-45"></path>
                 </g>
             </g>
-            <text id="*-Data-source" opacity="0.8" font-family="Helvetica" font-size="15" font-weight="normal" fill="#18463E">
+            <text id="*-Data-source" opacity="0.8" font-family="Maison Neue" font-size="15" font-weight="600" fill="#18463E">
                 <tspan x="1254" y="919">* Data source</tspan>
             </text>
             <g id="Earth-/-Carbon" transform="translate(-477.000000, 62.000000)">
@@ -4538,14 +4559,14 @@
                 </g>
             </g>
             <g id="Headlines" transform="translate(138.000000, 69.000000)" font-family="Helvetica" font-weight="normal">
-                <text id="How-much-harmful-car" font-size="17" line-spacing="25" fill="#18463E">
+                <text id="How-much-harmful-car" font-family="Maison Neue" font-weight="500" font-size="17" line-spacing="25" fill="#18463E">
                     <tspan x="415.609131" y="143">How much harmful carbon can you capture by </tspan>
                     <tspan x="467.115479" y="168">switching to Wholesome Meats?</tspan>
                 </text>
-                <text id="Tagline" font-size="16" line-spacing="30" letter-spacing="1" fill="#388E3C">
+                <text id="Tagline" font-family="Sweet Sans Pro" font-weight="700" font-size="16" line-spacing="30" letter-spacing="1" fill="#388E3C">
                     <tspan x="447.746094" y="15">HEALTHY SOIL STORES CARBON</tspan>
                 </text>
-                <text id="Wholesome-Carbon-Sim" font-size="58" line-spacing="68" fill="#003C5B">
+                <text id="Wholesome-Carbon-Sim" font-size="58" line-spacing="68" fill="#003C5B" font-family="Recoleta Alt" font-weight="600">
                     <tspan x="147.033203" y="81.9482422">Wholesome Carbon Simulator</tspan>
                 </text>
             </g>
