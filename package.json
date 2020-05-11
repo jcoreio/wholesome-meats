@@ -1,0 +1,10 @@
+{
+  "name": "wholesome-meats",
+  "version": "1.0.0",
+  "description": "animated graphic for Wholesome Meats webpage",
+  "main": "index.html",
+  "repository": "https://github.com/jcoreio/wholesome-meats.git",
+  "author": "Andy Edwards",
+  "license": "MIT",
+  "private": true
+}
