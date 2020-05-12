@@ -38,14 +38,29 @@
     #Knob {
         cursor: grab; 
     }
+    #Value-Indicator {
+        transition: transform 0.3s ease-out;
+    }
+    #Slider-Fill {
+        transition: transform 0.3s ease-out;
+    }
     body.is-adjusting {
         cursor: grabbing;
+    }
+    body.is-adjusting #Value-Indicator {
+        transition: none;
+    }
+    body.is-adjusting #Slider-Fill {
+        transition: none;
     }
     body.is-adjusting #Knob {
         cursor: grabbing;
     }
     #Drag-handles {
         pointer-events: none;
+    }
+    .button {
+        cursor: pointer;
     }
   </style>
 </head>
@@ -55,16 +70,7 @@
   <svg width="1458px" height="1286px" viewBox="0 0 1458 1286" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>BG</title>
     <defs>
-        <pattern id="pattern-1" width="644.423841" height="644.423841" x="-644.423841" y="-644.423841" patternUnits="userSpaceOnUse">
-            <use xlink:href="#image-2" transform="scale(0.745860927,0.745860927)"></use>
-        </pattern>
         <path d="M75.13,73.1203226 C68.8325,79.2516129 46.75,95.8823091 46.75,115.132954 L46.75,123.172403 C46.75,131.338532 53.735,136.709032 55.66,138.583226 C58.6575,141.474839 60.5,145.490968 60.5,149.935484 C60.5,158.797742 53.13,166 44,166 C34.87,166 27.5,158.797742 27.5,149.935484 C27.5,145.490968 29.3425,141.474839 32.3125,138.583226 C34.265,136.709032 41.25,131.338532 41.25,123.172403 C41.25,117.728317 41.25,115.048501 41.25,115.132954 C41.25,95.8823091 19.1675,79.2516129 12.87,73.1203226 C4.9225,65.3825806 0,54.6729032 0,42.8387097 C0,19.1703226 19.6625,0.0267741935 44,0 C68.3375,0.0267741935 88,19.1703226 88,42.8387097 C88,54.6729032 83.0775,65.3825806 75.13,73.1203226 Z" id="path-3"></path>
-        <rect id="path-5" x="0" y="0" width="40" height="40" rx="20"></rect>
-        <filter x="-81.2%" y="-68.8%" width="262.5%" height="262.5%" filterUnits="objectBoundingBox" id="filter-6">
-            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-        </filter>
         <polygon id="path-7" points="0.387091815 0.0295346451 7.68058648 0.0295346451 7.68058648 1.76 0.387091815 1.76"></polygon>
         <polygon id="path-9" points="0 0.498256 25.6133694 0.498256 25.6133694 24.64 0 24.64"></polygon>
         <polygon id="path-11" points="0.819017794 0.636216602 5.50718861 0.636216602 5.50718861 1.76 0.819017794 1.76"></polygon>
@@ -570,20 +576,24 @@
             <g id="Booster" transform="translate(0.000000, 762.000000)">
                 <g id="Group-65" font-family="Maison Neue" font-weight="700" transform="translate(535.000000, 114.500000)" text-anchor="middle">
                     <g id="Group-58" transform="translate(0.000000, 0.500000)">
-                        <rect id="Rectangle" fill="#6CA342" x="0" y="0" width="174" height="62" rx="31"></rect>
-                        <text id="Fake-Meat" font-size="18" line-spacing="16" fill="#F5F3EE">
-                            <tspan x="87" y="30">Fake Meat</tspan>
-                        </text>
-                        <text id="x2-Boost" font-size="14" line-spacing="16" fill="#18463E">
-                            <tspan x="87" y="51">x2 Boost</tspan>
-                        </text>
-                        <rect id="Rectangle-Copy-6" fill="#ADBFA0" x="196" y="0" width="192" height="62" rx="31"></rect>
-                        <text id="Feed-Lot-Meat" font-size="18" line-spacing="21" fill="#18463E">
-                            <tspan x="292" y="30">Feed Lot Meat</tspan>
-                        </text>
-                        <text id="x10-Boost" opacity="0.620326451" font-size="14" line-spacing="16" fill="#454545">
-                            <tspan x="292" y="51">x10 Boost</tspan>
-                        </text>
+                        <g id="Fake-Meat-Button" class="button">
+                            <rect fill="#6CA342" x="0" y="0" width="174" height="62" rx="31"></rect>
+                            <text id="Fake-Meat" font-size="18" line-spacing="16" fill="#F5F3EE">
+                                <tspan x="87" y="30">Fake Meat</tspan>
+                            </text>
+                            <text id="x2-Boost" font-size="14" line-spacing="16" fill="#18463E">
+                                <tspan x="87" y="51">x2 Boost</tspan>
+                            </text>
+                        </g>
+                        <g id="Feed-Lot-Meat-Button" class="button">
+                            <rect fill="#ADBFA0" x="196" y="0" width="192" height="62" rx="31"></rect>
+                            <text id="Feed-Lot-Meat" font-size="18" line-spacing="21" fill="#18463E">
+                                <tspan x="292" y="30">Feed Lot Meat</tspan>
+                            </text>
+                            <text id="x10-Boost" opacity="0.620326451" font-size="14" line-spacing="16" fill="#454545">
+                                <tspan x="292" y="51">x10 Boost</tspan>
+                            </text>
+                        </g>
                     </g>
                 </g>
                 <g transform="translate(729, 0)" text-anchor="middle">
@@ -1094,7 +1104,7 @@
                             <path d="M0.461580071,0.427782194 C6.34650534,18.2061383 6.98195018,36.8536506 7.24495374,55.4403577 L10.6851815,55.4403577 C9.2766121,36.8214596 7.46029893,17.8377306 0.461580071,0.427782194" id="Fill-249"  mask="url(#mask-88)"></path>
                         </g>
                         <g id="Group-254" transform="translate(51.188612, 19.360000)">
-                            <mask id="mask-90" fill="white">
+                            <mask id="mask-90" fill="blue">
                                 <use xlink:href="#path-89"></use>
                             </mask>
                             <g id="Clip-253"></g>
@@ -2402,11 +2412,7 @@
                             <path d="M0.461580071,0.427782194 C6.34650534,18.2061383 6.98195018,36.8536506 7.24495374,55.4403577 L10.6851815,55.4403577 C9.2766121,36.8214596 7.46029893,17.8377306 0.461580071,0.427782194" id="Fill-249"  mask="url(#mask-386)"></path>
                         </g>
                         <g id="Group-254" transform="translate(51.188612, 19.360000)">
-                            <mask id="mask-388" fill="white">
-                                <use xlink:href="#path-387"></use>
-                            </mask>
-                            <g id="Clip-253"></g>
-                            <path d="M1.54660214,0.522967077 C0.586374377,15.4944071 0.25806121,30.711604 2.88280142,45.7601794 L6.40245979,45.7601794 C2.61097224,31.2102932 1.70722847,15.7670717 1.54660214,0.522967077" id="Fill-252"  mask="url(#mask-388)"></path>
+                            <path d="M1.54660214,0.522967077 C0.586374377,15.4944071 0.25806121,30.711604 2.88280142,45.7601794 L6.40245979,45.7601794 C2.61097224,31.2102932 1.70722847,15.7670717 1.54660214,0.522967077" id="Fill-252"></path>
                         </g>
                         <path d="M90.9039146,22.88 C82.9605828,35.1598883 80.8429488,49.8207707 79.430605,64.24 L82.4122196,64.24 C82.8230512,49.9380436 83.9109615,35.5916656 90.9039146,22.88" id="Fill-255" ></path>
                         <path d="M77.6654804,20.24 C76.2338258,35.1874029 73.1199286,49.9782413 72.3701068,65.12 L75.7501325,65.12 C75.3810492,50.2859714 77.3430182,35.2197955 77.6654804,20.24" id="Fill-257" ></path>
