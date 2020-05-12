@@ -6,5 +6,8 @@
   "repository": "https://github.com/jcoreio/wholesome-meats.git",
   "author": "Andy Edwards",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "jsdom": "^16.2.2"
+  }
 }
