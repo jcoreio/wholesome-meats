@@ -8,41 +8,44 @@
   <link rel="stylesheet" href="carbon-simulator.css">
   <style>
     @font-face {
-      font-family: "Maison Neue";
-      font-weight: 700;
-      src: url("MaisonNeue-Bold.ttf");
+        font-family: "Maison Neue";
+        font-weight: 700;
+        src: url("MaisonNeue-Bold.ttf");
     }
     @font-face {
-      font-family: "Maison Neue";
-      font-weight: 500;
-      src: url("MaisonNeue-Medium.ttf");
+        font-family: "Maison Neue";
+        font-weight: 500;
+        src: url("MaisonNeue-Medium.ttf");
     }
     @font-face {
-      font-family: "Recoleta Alt";
-      font-weight: 600;
-      src: url("RecoletaAlt-SemiBold.otf");
+        font-family: "Recoleta Alt";
+        font-weight: 600;
+        src: url("RecoletaAlt-SemiBold.otf");
     }
     @font-face {
-      font-family: "Sweet Sans Pro";
-      font-weight: 700;
-      src: url("SweetSansPro-Bold.otf");
+        font-family: "Sweet Sans Pro";
+        font-weight: 700;
+        src: url("SweetSansPro-Bold.otf");
     }
 
     body {
-      padding: 0;
-      margin: 0;
+        padding: 0;
+        margin: 0;
     }
-/*    #bg {
-      background-image: url("Wholesome-kraft-paper-texture-70.jpg");
-      opacity: 0.65;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }*/
     svg {
-      position: relative;
+        position: relative;
+    }
+    #Knob {
+        cursor: grab; 
+    }
+    body.is-adjusting {
+        cursor: grabbing;
+    }
+    body.is-adjusting #Knob {
+        cursor: grabbing;
+    }
+    #Drag-handles {
+        pointer-events: none;
     }
   </style>
 </head>
@@ -512,8 +515,8 @@
                 <g transform="translate(-343.000000, 0.000000)">
                     <g id="Destinations" transform="translate(0.000000, 0.000000)" stroke-linecap="square" stroke-width="4">
                         <g id="Icon">
-                            <line x1="0" y1="0" x2="686" y2="0" id="Line-3" stroke="#18463E" opacity="0.254627046"></line>
-                            <line x1="0" y1="0" x2="343" y2="0" id="Line-3" stroke="#6CA342"></line>
+                            <line id="Slider-Track" x1="0" y1="0" x2="686" y2="0" id="Line-3" stroke="#18463E" opacity="0.254627046"></line>
+                            <line id="Slider-Fill" x1="0" y1="0" x2="343" y2="0" id="Line-3" stroke="#6CA342"></line>
                         </g>
                     </g>
                     <g id="Value-Indicator" transform="translate(343.000000, 0.000000)">
@@ -551,7 +554,7 @@
                     <tspan x="220" y="106">of harmful carbon </tspan>
                     <tspan x="220" y="130">captured per year</tspan>
                 </text>
-                <text id="240-lbs" font-family="Recoleta Alt" font-weight="600" font-size="48" line-spacing="36">
+                <text id="Pounds-of-Carbon" font-family="Recoleta Alt" font-weight="600" font-size="48" line-spacing="36">
                     <tspan x="220" y="74">240 lbs</tspan>
                 </text>
                 <text id="=" font-size="100" fill="#6CA342">
@@ -560,7 +563,7 @@
                 <text id="of-Wholesome-Meat" font-family="Sweet Sans Pro" font-weight="700" font-size="18" line-spacing="24">
                     <tspan x="-220" y="106">of Wholesome Meat</tspan>
                 </text>
-                <text id="37-lbs" font-family="Recoleta Alt" font-weight="600" font-size="48" line-spacing="36">
+                <text id="Pounds-of-Meat" font-family="Recoleta Alt" font-weight="600" font-size="48" line-spacing="36">
                     <tspan x="-220" y="74">37 lbs</tspan>
                 </text>
             </g>
