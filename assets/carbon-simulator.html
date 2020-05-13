@@ -63,11 +63,14 @@
         cursor: pointer;
     }
     #Carbon-Bubbles > circle {
-        transition: transform 2s ease-in;
+        transition-property: transform, fill;
+        transition-timing-function: ease-in;
+        transition-duration: 2s;
         transform: translateY(0px);
     }
     #Carbon-Bubbles > circle.sequestered {
         transform: translateY(750px);
+        fill: #6CA342;
     }
   </style>
 </head>
