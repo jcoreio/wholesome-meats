@@ -25,20 +25,19 @@
   const poundsOfMeat = document.querySelector('#Pounds-of-Meat tspan')
   const initialMeat = parseFloat(poundsOfMeat.textContent)
   const poundsOfCarbon = document.querySelector('#Pounds-of-Carbon tspan')
+  const initialCarbon = parseFloat(poundsOfCarbon.textContent)
   const grass = document.querySelector('#Grass')
   const initialGrassScale = parseFloat(/scale\(([^)]+)\)/.exec(grass.getAttribute('transform'))[1].split(/,/)[1])
   const grassTransform = grass.getAttribute('transform')
+  const fakeMeatButton = document.getElementById('Fake-Meat-Button')
+  const feedLotMeatButton = document.getElementById('Feed-Lot-Meat-Button')
+
+  let boost = fakeMeatButton.classList.contains('is-toggled') ? 'fakeMeat' : feedLotMeatButton.classList.contains('is-toggled') ? 'feedLotMeat' : null
 
   const carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
 
   function pxToSvg(px) {
     return px * svgWidth / document.body.offsetWidth
-  }
-
-  function meatToGrassScale(meat) {
-    const f = meat / initialMeat
-    const rf = 1 - f
-    return rf * initialGrassScale / 3 + f * initialGrassScale
   }
 
   function centerDistSq(el) {
@@ -53,14 +52,25 @@
   })
 
   let currentMeat = initialMeat, targetMeat = initialMeat
-  const meatToCarbon = parseFloat(poundsOfCarbon.textContent) / initialMeat
+  const initialMeatToCarbon = parseFloat(poundsOfCarbon.textContent) / initialMeat
 
   function meatRatio(meat) {
     return (meat - minMeat) / (maxMeat - minMeat)
   }
 
+  function meatToCarbon(meat) {
+    return meat * initialMeatToCarbon * (boost === 'fakeMeat' ? 2 : boost === 'feedLotMeat' ? 10 : 1)
+  }
+  const maxCarbon = meatToCarbon(maxMeat)
+
+  function meatToGrassScale(meat) {
+    const f = meatToCarbon(meat) / initialCarbon
+    const rf = 1 - f
+    return rf * initialGrassScale / 3 + f * initialGrassScale
+  }
+
   function meatToSequestered(meat) {
-    return Math.round(meatRatio(meat) * carbonBubbles.length)
+    return Math.max(0, Math.min(carbonBubbles.length, Math.round(meatToCarbon(meat) * carbonBubbles.length / maxCarbon)))
   }
 
   let currentSequestered = 0
@@ -83,7 +93,7 @@
     if (currentMeat === targetMeat) clearInterval(updateTextInterval)
     indicatorText.textContent = meat.toFixed(0)
     poundsOfMeat.textContent = meat.toFixed(0) + (meat === 1 ? ' lb' : ' lbs')
-    const carbon = meat * meatToCarbon
+    const carbon = meatToCarbon(meat)
     poundsOfCarbon.textContent = carbon.toFixed(0) + (carbon === 1 ? ' lb' : ' lbs')
   }
 
@@ -105,11 +115,23 @@
   function setMeat(meat) {
     meat = Math.max(minMeat, Math.min(maxMeat, Math.round(meat)))
     targetMeat = meat
+    update()
+  }
+
+  function setBoost(_boost) {
+    boost = _boost
+    update()
+  }
+
+  function update() {
+    const meat = targetMeat
     targetSequestered = meatToSequestered(meat)
     const x = meatToX(meat)
     sliderFill.setAttribute('transform', 'scale(' + (x / initialFillWidth).toFixed(3) + ', 1)')
     valueIndicator.setAttribute('transform', 'translate(' + x + ', 0)')
     grass.setAttribute('transform', grassTransform.replace(/(scale\([^,]+,)([^)]+)/, (match, before) => before + meatToGrassScale(meat)))
+    fakeMeatButton.setAttribute('class', boost === 'fakeMeat' ? 'boost-button is-toggled' : 'boost-button')
+    feedLotMeatButton.setAttribute('class', boost === 'feedLotMeat' ? 'boost-button is-toggled' : 'boost-button')
     clearInterval(updateTextInterval)
     updateText()
     updateTextInterval = setInterval(updateText, 20)
@@ -141,12 +163,11 @@
     document.addEventListener('mouseup', handleUp)
   })
 
-  document.getElementById('Fake-Meat-Button').addEventListener('click', function (e) {
+  function handleBoostClick(e) {
     e.preventDefault()
-    setMeat(20)
-  })
-  document.getElementById('Feed-Lot-Meat-Button').addEventListener('click', function (e) {
-    e.preventDefault()
-    setMeat(60)
-  })
+    const clickedBoost = e.currentTarget === fakeMeatButton ? 'fakeMeat' : 'feedLotMeat'
+    setBoost(clickedBoost === boost ? null : clickedBoost)
+  }
+  fakeMeatButton.addEventListener('click', handleBoostClick)
+  feedLotMeatButton.addEventListener('click', handleBoostClick)
 })()

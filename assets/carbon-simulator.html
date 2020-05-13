@@ -59,9 +59,6 @@
     #Drag-handles {
         pointer-events: none;
     }
-    .button {
-        cursor: pointer;
-    }
     #Carbon-Bubbles > circle {
         transition-property: transform, fill;
         transition-timing-function: ease-in;
@@ -77,6 +74,28 @@
         transition-property: transform, fill;
         transition-timing-function: cubic-bezier(0.2, 0, 0.8, 1);
         transition-duration: 4s;
+        pointer-events: none;
+    }
+    .boost-button {
+        cursor: pointer;
+    }
+    .boost-button > rect {
+        fill: #ADBFA0;
+    }
+    .boost-button > .meat-type {
+        fill: #18463E;
+    }
+    .boost-button > .boost-amount {
+        fill: #454545;
+    }
+    .boost-button.is-toggled > rect {
+        fill: #6CA342;
+    }
+    .boost-button.is-toggled > .meat-type {
+        fill: #F5F3EE;
+    }
+    .boost-button.is-toggled > .boost-amount {
+        fill: #18463E;
     }
   </style>
 </head>
@@ -591,21 +610,21 @@
             <g id="Booster" transform="translate(0.000000, 762.000000)">
                 <g id="Group-65" font-family="Maison Neue" font-weight="700" transform="translate(535.000000, 114.500000)" text-anchor="middle">
                     <g id="Group-58" transform="translate(0.000000, 0.500000)">
-                        <g id="Fake-Meat-Button" class="button">
+                        <g id="Fake-Meat-Button" class="boost-button is-toggled">
                             <rect fill="#6CA342" x="0" y="0" width="174" height="62" rx="31"></rect>
-                            <text id="Fake-Meat" font-size="18" line-spacing="16" fill="#F5F3EE">
+                            <text class="meat-type" id="Fake-Meat" font-size="18" line-spacing="16" fill="#F5F3EE">
                                 <tspan x="87" y="30">Fake Meat</tspan>
                             </text>
-                            <text id="x2-Boost" font-size="14" line-spacing="16" fill="#18463E">
+                            <text class="boost-amount" id="x2-Boost" font-size="14" line-spacing="16" fill="#18463E">
                                 <tspan x="87" y="51">x2 Boost</tspan>
                             </text>
                         </g>
-                        <g id="Feed-Lot-Meat-Button" class="button">
+                        <g id="Feed-Lot-Meat-Button" class="boost-button">
                             <rect fill="#ADBFA0" x="196" y="0" width="192" height="62" rx="31"></rect>
-                            <text id="Feed-Lot-Meat" font-size="18" line-spacing="21" fill="#18463E">
+                            <text class="meat-type" id="Feed-Lot-Meat" font-size="18" line-spacing="21" fill="#18463E">
                                 <tspan x="292" y="30">Feed Lot Meat</tspan>
                             </text>
-                            <text id="x10-Boost" opacity="0.620326451" font-size="14" line-spacing="16" fill="#454545">
+                            <text class="boost-amount" id="x10-Boost" opacity="0.620326451" font-size="14" line-spacing="16" fill="#454545">
                                 <tspan x="292" y="51">x10 Boost</tspan>
                             </text>
                         </g>
