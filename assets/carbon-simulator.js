@@ -31,7 +31,6 @@
   })
 
   let currentMeat = parseFloat(poundsOfMeat.textContent)
-  let prevMeat = currentMeat
   let targetMeat = currentMeat
   const meatToCarbon = parseFloat(poundsOfCarbon.textContent) / currentMeat
 
@@ -63,8 +62,7 @@
     const x = sliderFill.getBoundingClientRect().width
     const meat = xToMeat(x)
     currentMeat = meat
-    if (currentMeat === prevMeat) clearInterval(updateTextInterval)
-    prevMeat = meat
+    if (currentMeat === targetMeat) clearInterval(updateTextInterval)
     indicatorText.textContent = meat.toFixed(0)
     poundsOfMeat.textContent = meat.toFixed(0) + (meat === 1 ? ' lb' : ' lbs')
     const carbon = meat * meatToCarbon
@@ -88,7 +86,6 @@
 
   function setMeat(meat) {
     meat = Math.max(minMeat, Math.min(maxMeat, Math.round(meat)))
-    if (targetMeat === meat) return
     targetMeat = meat
     targetSequestered = meatToSequestered(meat)
     const x = meatToX(meat)
