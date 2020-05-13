@@ -83,7 +83,7 @@
     } else {
       carbonBubbles[--currentSequestered].setAttribute('class', '')
     }
-    setTimeout(animateBubbles, 10)
+    setTimeout(animateBubbles, 20)
   }
 
   function setMeat(meat) {
