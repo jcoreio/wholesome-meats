@@ -23,12 +23,21 @@
   const initialFillWidth = xSpan(sliderFill)
   const knob = document.getElementById('Knob')
   const poundsOfMeat = document.querySelector('#Pounds-of-Meat tspan')
+  const initialMeat = parseFloat(poundsOfMeat.textContent)
   const poundsOfCarbon = document.querySelector('#Pounds-of-Carbon tspan')
+  const grass = document.querySelector('#Grass')
+  const initialGrassScale = parseFloat(/scale\(([^)]+)\)/.exec(grass.getAttribute('transform'))[1].split(/,/)[1])
 
   const carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
 
   function pxToSvg(px) {
     return px * svgWidth / document.body.offsetWidth
+  }
+
+  function meatToGrassScale(meat) {
+    const f = meat / initialMeat
+    const rf = 1 - f
+    return rf * initialGrassScale / 3 + f * initialGrassScale
   }
 
   function centerDistSq(el) {
@@ -42,9 +51,8 @@
     return centerDistSq(a) - centerDistSq(b)
   })
 
-  let currentMeat = parseFloat(poundsOfMeat.textContent)
-  let targetMeat = currentMeat
-  const meatToCarbon = parseFloat(poundsOfCarbon.textContent) / currentMeat
+  let currentMeat = initialMeat, targetMeat = initialMeat
+  const meatToCarbon = parseFloat(poundsOfCarbon.textContent) / initialMeat
 
   function meatRatio(meat) {
     return (meat - minMeat) / (maxMeat - minMeat)
@@ -100,6 +108,10 @@
     const x = meatToX(meat)
     sliderFill.setAttribute('transform', 'scale(' + (x / initialFillWidth).toFixed(3) + ', 1)')
     valueIndicator.setAttribute('transform', 'translate(' + x + ', 0)')
+    grass.setAttribute('transform', grass.getAttribute('transform').replace(/scale\(([^)]+)\)/, (match, args) => {
+      const nums = args.split(/,/g)
+      return 'scale(' + nums[0] + ', ' + meatToGrassScale(meat) + ')'
+    }))
     clearInterval(updateTextInterval)
     updateText()
     updateTextInterval = setInterval(updateText, 20)
