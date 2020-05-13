@@ -2,22 +2,34 @@
   const minMeat = parseFloat(document.getElementById('Min-Value').textContent.trim())
   const maxMeat = parseFloat(document.getElementById('Max-Value').textContent.trim())
 
+  const svg = document.querySelector('svg')
+  const svgWidth = parseFloat(svg.getAttribute('viewBox').split(/\s+/g)[2])
   const oval = document.getElementById('Oval')
   const ovalBounds = oval.getBoundingClientRect()
 
   const cx = ovalBounds.x + ovalBounds.width / 2
   const cy = ovalBounds.y + ovalBounds.width / 2 // use width because it's cropped at the bottom
 
+  function xSpan(el) {
+    return parseFloat(el.getAttribute('x2')) - parseFloat(el.getAttribute('x1'))
+  }
+
   const valueIndicator = document.getElementById('Value-Indicator')
   const indicatorText = document.querySelector('#Pounds tspan')
   const slider = document.getElementById('Slider')
   const sliderTrack = document.getElementById('Slider-Track')
+  const trackWidth = xSpan(sliderTrack)
   const sliderFill = document.getElementById('Slider-Fill')
+  const initialFillWidth = xSpan(sliderFill)
   const knob = document.getElementById('Knob')
   const poundsOfMeat = document.querySelector('#Pounds-of-Meat tspan')
   const poundsOfCarbon = document.querySelector('#Pounds-of-Carbon tspan')
 
   const carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
+
+  function pxToSvg(px) {
+    return px * svgWidth / document.body.offsetWidth
+  }
 
   function centerDistSq(el) {
     const bounds = el.getBoundingClientRect()
@@ -45,21 +57,18 @@
   let currentSequestered = 0
   let targetSequestered = meatToSequestered(currentMeat)
 
-  const trackBounds = sliderTrack.getBoundingClientRect()
-  const initialFillWidth = sliderFill.getBoundingClientRect().width
-
   function meatToX(meat) {
-    return meatRatio(meat) * trackBounds.width
+    return meatRatio(meat) * trackWidth
   }
   function xToMeat(x) {
-    const f = x / trackBounds.width
+    const f = x / trackWidth
     const rf = 1 - f
     return Math.round(rf * minMeat + f * maxMeat)
   }
   let updateTextInterval
 
   function updateText() {
-    const x = sliderFill.getBoundingClientRect().width
+    const x = pxToSvg(sliderFill.getBoundingClientRect().width)
     const meat = xToMeat(x)
     currentMeat = meat
     if (currentMeat === targetMeat) clearInterval(updateTextInterval)
@@ -109,7 +118,7 @@
 
     function handleMove(e) {
       e.preventDefault()
-      setMeat(xToMeat(e.clientX - trackBounds.x))
+      setMeat(xToMeat(pxToSvg(e.clientX - sliderTrack.getBoundingClientRect().x)))
     }
     function handleUp(e) {
       e.preventDefault()
