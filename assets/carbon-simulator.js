@@ -20,21 +20,26 @@
   const sliderTrack = document.getElementById('Slider-Track')
   const trackWidth = xSpan(sliderTrack)
   const sliderFill = document.getElementById('Slider-Fill')
-  const initialFillWidth = xSpan(sliderFill)
   const knob = document.getElementById('Knob')
   const poundsOfMeat = document.querySelector('#Pounds-of-Meat tspan')
-  const initialMeat = parseFloat(poundsOfMeat.textContent)
   const poundsOfCarbon = document.querySelector('#Pounds-of-Carbon tspan')
-  const initialCarbon = parseFloat(poundsOfCarbon.textContent)
   const grass = document.querySelector('#Grass')
   const initialGrassScale = parseFloat(/scale\(([^)]+)\)/.exec(grass.getAttribute('transform'))[1].split(/,/)[1])
   const grassTransform = grass.getAttribute('transform')
   const fakeMeatButton = document.getElementById('Fake-Meat-Button')
   const feedLotMeatButton = document.getElementById('Feed-Lot-Meat-Button')
 
-  let boost = fakeMeatButton.classList.contains('is-toggled') ? 'fakeMeat' : feedLotMeatButton.classList.contains('is-toggled') ? 'feedLotMeat' : null
+  let boost = null
 
   const carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
+
+  function bubbleSize(bubble) {
+    const r = parseFloat(bubble.getAttribute('r'))
+    return r * r
+  }
+  const totalBubbleSize = carbonBubbles.reduce(function (total, bubble) {
+    return total + bubbleSize(bubble)
+  }, 0)
 
   function pxToSvg(px) {
     return px * svgWidth / document.body.offsetWidth
@@ -51,30 +56,32 @@
     return centerDistSq(a) - centerDistSq(b)
   })
 
-  let currentMeat = initialMeat, targetMeat = initialMeat
-  const initialMeatToCarbon = parseFloat(poundsOfCarbon.textContent) / initialMeat
+  let targetMeat = 0
+  const initialMeatToCarbon = 3
 
   function meatRatio(meat) {
     return (meat - minMeat) / (maxMeat - minMeat)
   }
 
+  const feedLotBoost = 10
+  const maxCarbon = maxMeat * initialMeatToCarbon * feedLotBoost
   function meatToCarbon(meat) {
-    return meat * initialMeatToCarbon * (boost === 'fakeMeat' ? 2 : boost === 'feedLotMeat' ? 10 : 1)
-  }
-  const maxCarbon = meatToCarbon(maxMeat)
-
-  function meatToGrassScale(meat) {
-    const f = meatToCarbon(meat) / initialCarbon
-    const rf = 1 - f
-    return rf * initialGrassScale / 3 + f * initialGrassScale
+    return Math.max(0, Math.min(maxCarbon, meat * initialMeatToCarbon * (boost === 'fakeMeat' ? 2 : boost === 'feedLotMeat' ? feedLotBoost : 1)))
   }
 
   function meatToSequestered(meat) {
-    return Math.max(0, Math.min(carbonBubbles.length, Math.round(meatToCarbon(meat) * carbonBubbles.length / maxCarbon)))
+    return meatToCarbon(meat) * totalBubbleSize / maxCarbon
   }
 
+  function meatToGrassScale(meat) {
+    const f = meatToCarbon(meat) / maxCarbon
+    const rf = 1 - f
+    return rf * initialGrassScale + f * initialGrassScale * 6
+  }
+
+  let numSequestered = 0
   let currentSequestered = 0
-  let targetSequestered = meatToSequestered(currentMeat)
+  let targetSequestered = meatToSequestered(targetMeat)
 
   function meatToX(meat) {
     return meatRatio(meat) * trackWidth
@@ -84,13 +91,9 @@
     const rf = 1 - f
     return Math.round(rf * minMeat + f * maxMeat)
   }
-  let updateTextInterval
 
   function updateText() {
-    const x = pxToSvg(sliderFill.getBoundingClientRect().width)
-    const meat = xToMeat(x)
-    currentMeat = meat
-    if (currentMeat === targetMeat) clearInterval(updateTextInterval)
+    const meat = targetMeat
     indicatorText.textContent = meat.toFixed(0)
     poundsOfMeat.textContent = meat.toFixed(0) + (meat === 1 ? ' lb' : ' lbs')
     const carbon = meatToCarbon(meat)
@@ -99,17 +102,26 @@
 
   let animatingBubbles = false
   function animateBubbles() {
-    if (currentSequestered === targetSequestered) {
-      animatingBubbles = false
-      return
-    }
-    animatingBubbles = true
+    animatingBubbles = false
+    let nextNumSequestered
+    let bubble
     if (currentSequestered < targetSequestered) {
-      carbonBubbles[currentSequestered++].setAttribute('class', 'sequestered')
+      nextNumSequestered = numSequestered + 1
+      bubble = carbonBubbles[nextNumSequestered]
     } else {
-      carbonBubbles[--currentSequestered].setAttribute('class', '')
+      nextNumSequestered = numSequestered - 1
+      bubble = carbonBubbles[numSequestered]
     }
-    setTimeout(animateBubbles, 20)
+    if (!bubble) return
+    const isIncrease = nextNumSequestered > numSequestered 
+    const nextSequestered = currentSequestered + bubbleSize(bubble) * (isIncrease ? 1 : -1)
+    if (Math.abs(nextSequestered - targetSequestered) < Math.abs(currentSequestered - targetSequestered)) {
+      animatingBubbles = true
+      bubble.setAttribute('class', isIncrease ? 'sequestered' : '')
+      currentSequestered = nextSequestered
+      numSequestered = nextNumSequestered
+    }
+    if (animatingBubbles) setTimeout(animateBubbles, 20)
   }
 
   function setMeat(meat) {
@@ -127,14 +139,14 @@
     const meat = targetMeat
     targetSequestered = meatToSequestered(meat)
     const x = meatToX(meat)
-    sliderFill.setAttribute('transform', 'scale(' + (x / initialFillWidth).toFixed(3) + ', 1)')
+    sliderFill.setAttribute('transform', 'scale(' + (x.toFixed(3) / trackWidth) + ', 1)')
     valueIndicator.setAttribute('transform', 'translate(' + x + ', 0)')
-    grass.setAttribute('transform', grassTransform.replace(/(scale\([^,]+,)([^)]+)/, (match, before) => before + meatToGrassScale(meat)))
+    grass.setAttribute('transform', grassTransform.replace(/(scale\([^,]+,)([^)]+)/, function (match, before) {
+      return before + meatToGrassScale(meat)
+    }))
     fakeMeatButton.setAttribute('class', boost === 'fakeMeat' ? 'boost-button is-toggled' : 'boost-button')
     feedLotMeatButton.setAttribute('class', boost === 'feedLotMeat' ? 'boost-button is-toggled' : 'boost-button')
-    clearInterval(updateTextInterval)
     updateText()
-    updateTextInterval = setInterval(updateText, 20)
     if (!animatingBubbles) animateBubbles()
   }
 
@@ -144,7 +156,6 @@
 
   knob.addEventListener('mousedown', function (e) {
     e.preventDefault()
-    const startPounds = currentMeat
 
     document.body.setAttribute('class', 'is-adjusting')
 
