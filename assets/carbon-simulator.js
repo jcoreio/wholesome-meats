@@ -27,6 +27,7 @@
   const poundsOfCarbon = document.querySelector('#Pounds-of-Carbon tspan')
   const grass = document.querySelector('#Grass')
   const initialGrassScale = parseFloat(/scale\(([^)]+)\)/.exec(grass.getAttribute('transform'))[1].split(/,/)[1])
+  const grassTransform = grass.getAttribute('transform')
 
   const carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
 
@@ -108,10 +109,7 @@
     const x = meatToX(meat)
     sliderFill.setAttribute('transform', 'scale(' + (x / initialFillWidth).toFixed(3) + ', 1)')
     valueIndicator.setAttribute('transform', 'translate(' + x + ', 0)')
-    grass.setAttribute('transform', grass.getAttribute('transform').replace(/scale\(([^)]+)\)/, (match, args) => {
-      const nums = args.split(/,/g)
-      return 'scale(' + nums[0] + ', ' + meatToGrassScale(meat) + ')'
-    }))
+    grass.setAttribute('transform', grassTransform.replace(/(scale\([^,]+,)([^)]+)/, (match, before) => before + meatToGrassScale(meat)))
     clearInterval(updateTextInterval)
     updateText()
     updateTextInterval = setInterval(updateText, 20)
