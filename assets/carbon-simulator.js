@@ -103,15 +103,8 @@
   let animatingBubbles = false
   function animateBubbles() {
     animatingBubbles = false
-    let nextNumSequestered
-    let bubble
-    if (currentSequestered < targetSequestered) {
-      nextNumSequestered = numSequestered + 1
-      bubble = carbonBubbles[nextNumSequestered]
-    } else {
-      nextNumSequestered = numSequestered - 1
-      bubble = carbonBubbles[numSequestered]
-    }
+    const nextNumSequestered = numSequestered + (currentSequestered < targetSequestered ? 1 : -1)
+    const bubble = carbonBubbles[Math.min(numSequestered, nextNumSequestered)]
     if (!bubble) return
     const isIncrease = nextNumSequestered > numSequestered 
     const nextSequestered = currentSequestered + bubbleSize(bubble) * (isIncrease ? 1 : -1)
