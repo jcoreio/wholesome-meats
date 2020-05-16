@@ -147,56 +147,61 @@
 
   setMeat(10)
 
-  knob.addEventListener('mousedown', function (e) {
-    e.preventDefault()
-
-    document.body.setAttribute('class', 'is-adjusting')
-
-    function handleMove(e) {
-      e.preventDefault()
-      setMeat(xToMeat(pxToSvg(e.clientX - sliderTrack.getBoundingClientRect().x)))
-    }
-    function handleUp(e) {
-      e.preventDefault()
-      document.removeEventListener('mousemove', handleMove)
-      document.removeEventListener('mouseup', handleUp)
-      document.body.setAttribute('class', '')
-    }
-
-    document.addEventListener('mousemove', handleMove)
-    document.addEventListener('mouseup', handleUp)
+  addDragListener(knob, function (e) {
+    setMeat(xToMeat(pxToSvg(e.clientX - sliderTrack.getBoundingClientRect().x)))
+    document.body.setAttribute('class', e.type === 'end' ? '' : 'is-adjusting')
   })
 
-  let startTouch
-  knob.addEventListener('touchstart', function (e) {
-    const touch = e.changedTouches[0]
-    if (startTouch || !touch) return
-    document.body.setAttribute('class', 'is-adjusting')
-    startTouch = {
-      identifier: touch.identifier,
-      clientX: touch.clientX,
-      clientY: touch.clientY,
-    }
-  })
-  function getMatchingTouch(e) {
-    if (!startTouch) return null
-    return Array.prototype.find.call(e.changedTouches, function (t) {
-      return t.identifier === startTouch.identifier
-    })
-  }
-  knob.addEventListener('touchmove', function (e) {
-    const touch = getMatchingTouch(e)
-    if (!touch) return
-    setMeat(xToMeat(pxToSvg(touch.clientX - sliderTrack.getBoundingClientRect().x)))
-  })
-  function handleTouchEnd(e) {
-    const touch = getMatchingTouch(e)
-    if (!touch) return
-    document.body.setAttribute('class', '')
-    startTouch = null
-  }
-  knob.addEventListener('touchend', handleTouchEnd)
-  knob.addEventListener('touchcancel', handleTouchEnd)
+  // knob.addEventListener('mousedown', function (e) {
+  //   e.preventDefault()
+
+  //   document.body.setAttribute('class', 'is-adjusting')
+
+  //   function handleMove(e) {
+  //     e.preventDefault()
+  //     setMeat(xToMeat(pxToSvg(e.clientX - sliderTrack.getBoundingClientRect().x)))
+  //   }
+  //   function handleUp(e) {
+  //     e.preventDefault()
+  //     document.removeEventListener('mousemove', handleMove)
+  //     document.removeEventListener('mouseup', handleUp)
+  //     document.body.setAttribute('class', '')
+  //   }
+
+  //   document.addEventListener('mousemove', handleMove)
+  //   document.addEventListener('mouseup', handleUp)
+  // })
+
+  // let startTouch
+  // knob.addEventListener('touchstart', function (e) {
+  //   const touch = e.changedTouches[0]
+  //   if (startTouch || !touch) return
+  //   document.body.setAttribute('class', 'is-adjusting')
+  //   startTouch = {
+  //     identifier: touch.identifier,
+  //     clientX: touch.clientX,
+  //     clientY: touch.clientY,
+  //   }
+  // })
+  // function getMatchingTouch(e) {
+  //   if (!startTouch) return null
+  //   return Array.prototype.find.call(e.changedTouches, function (t) {
+  //     return t.identifier === startTouch.identifier
+  //   })
+  // }
+  // knob.addEventListener('touchmove', function (e) {
+  //   const touch = getMatchingTouch(e)
+  //   if (!touch) return
+  //   setMeat(xToMeat(pxToSvg(touch.clientX - sliderTrack.getBoundingClientRect().x)))
+  // })
+  // function handleTouchEnd(e) {
+  //   const touch = getMatchingTouch(e)
+  //   if (!touch) return
+  //   document.body.setAttribute('class', '')
+  //   startTouch = null
+  // }
+  // knob.addEventListener('touchend', handleTouchEnd)
+  // knob.addEventListener('touchcancel', handleTouchEnd)
 
   function handleBoostClick(e) {
     e.preventDefault()
