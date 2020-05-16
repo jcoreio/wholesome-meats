@@ -42,7 +42,6 @@
     }
     #left {
         display: inline-block;
-        background-color: blue;
         position: absolute;
         top: 0;
         left: 0;
@@ -51,18 +50,27 @@
     }
     #right {
         display: inline-block;
-        background-color: red;
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         overflow: hidden;
     }
-    img {
+    .farm-image {
       width: 100vw;
       height: 100vw;
       position: absolute;
       top: 13.5vw;
+    }
+    .bottom-divider {
+      width: 50vw;
+      height: 24vw;
+      position: absolute;
+      bottom: 0;
+    }
+    .right-bottom-divider {
+      transform: scaleX(-1);
+      right: 0;
     }
     #right > img {
       position: absolute;
@@ -91,17 +99,28 @@
     body.is-adjusting #knob {
       cursor: grabbing;
     }
+    .sky-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 13.5vw;
+    }
   </style>
   <script src="addDragListener.js"></script>
 </head>
 <body>
   <div id="root">
     <div id="left">
-      <img src="ReGen-Ranch.png" />
+      <div class="sky-gradient" style="background: linear-gradient(to top, rgb(158, 213, 205), rgba(158, 213, 205, 0) 100%);"></div>
+      <img class="farm-image" src="ReGen-Ranch.png" />
     </div>
     <div id="right" style="width: 50%">
-      <img src="Fake-Meat-Farm.png" />
+      <div class="sky-gradient" style="background: linear-gradient(to top, rgb(115, 160, 179), rgba(115, 160, 179, 0) 100%);"></div>
+      <img class="farm-image" src="Fake-Meat-Farm.png" />
     </div>
+    <img class="bottom-divider" src="soil-section-divider.png" />
+    <img class="bottom-divider right-bottom-divider" src="soil-section-divider.png" />
     <div id="divider" style="right: 50%">
       <svg viewBox="-38 -920 76 1840" preserveAspectRatio="xMidYMid meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <line x1="0" y1="-920" x2="0" y2="920" stroke="currentColor" stroke-width="4" stroke-dasharray="15,7" />
