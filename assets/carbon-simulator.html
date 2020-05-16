@@ -5,7 +5,6 @@
   <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="carbon-simulator.css">
   <style>
     @font-face {
         font-family: "Maison Neue";
@@ -34,6 +33,7 @@
     }
     svg {
         position: relative;
+        touch-action: none;
     }
     #Knob {
         cursor: grab; 
@@ -76,7 +76,12 @@
         transition-duration: 4s;
         pointer-events: none;
     }
+    #Booster {
+        /* hide for now */
+        display: none;
+    }
     .boost-button {
+        display: none;
         cursor: pointer;
     }
     .boost-button > rect {
@@ -773,7 +778,7 @@
                     <circle fill="#757575" cx="511.5" cy="308.5" r="15.5"></circle>
                 </g>
             </g>
-            <image id="Grass" href="grass.png" width="2880" transform="translate(0,1006) scale(0.6,0.1) translate(0,-243)" />
+            <image id="Grass" href="grass.png" width="2880" height="243" transform="translate(0,1006) scale(0.6,0.1) translate(0,-243)" />
             <g id="Soil-Lines" transform="translate(-1512.000000, 948.000000)">
                 <polygon id="Rectangle" fill="#6CA342" points="1509 56 2987 56 2987 326 1509 326"></polygon>
                 <g id="Group-19-Copy" transform="translate(1924.000000, 275.000000) scale(1, -1) translate(-1924.000000, -275.000000) translate(0.000000, 113.000000)" fill="#6CA342">

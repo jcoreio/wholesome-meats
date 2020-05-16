@@ -29,7 +29,7 @@
   const fakeMeatButton = document.getElementById('Fake-Meat-Button')
   const feedLotMeatButton = document.getElementById('Feed-Lot-Meat-Button')
 
-  let boost = null
+  let boost = 'feedLotMeat'
 
   const carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
 
@@ -166,6 +166,37 @@
     document.addEventListener('mousemove', handleMove)
     document.addEventListener('mouseup', handleUp)
   })
+
+  let startTouch
+  knob.addEventListener('touchstart', function (e) {
+    const touch = e.changedTouches[0]
+    if (startTouch || !touch) return
+    document.body.setAttribute('class', 'is-adjusting')
+    startTouch = {
+      identifier: touch.identifier,
+      clientX: touch.clientX,
+      clientY: touch.clientY,
+    }
+  })
+  function getMatchingTouch(e) {
+    if (!startTouch) return null
+    return Array.prototype.find.call(e.changedTouches, function (t) {
+      return t.identifier === startTouch.identifier
+    })
+  }
+  knob.addEventListener('touchmove', function (e) {
+    const touch = getMatchingTouch(e)
+    if (!touch) return
+    setMeat(xToMeat(pxToSvg(touch.clientX - sliderTrack.getBoundingClientRect().x)))
+  })
+  function handleTouchEnd(e) {
+    const touch = getMatchingTouch(e)
+    if (!touch) return
+    document.body.setAttribute('class', '')
+    startTouch = null
+  }
+  knob.addEventListener('touchend', handleTouchEnd)
+  knob.addEventListener('touchcancel', handleTouchEnd)
 
   function handleBoostClick(e) {
     e.preventDefault()
