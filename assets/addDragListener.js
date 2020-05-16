@@ -26,6 +26,7 @@ function addDragListener(el, handler) {
   el.addEventListener('touchstart', function (e) {
     const touch = e.changedTouches[0]
     if (touchId != null || !touch) return
+    if (e.cancelable) e.preventDefault()
     startX = touch.clientX
     startY = touch.clientY
     touchId = touch.identifier
@@ -40,11 +41,13 @@ function addDragListener(el, handler) {
   el.addEventListener('touchmove', function (e) {
     const touch = getMatchingTouch(e)
     if (!touch) return
+    if (e.cancelable) e.preventDefault()
     handler({type: 'move', startX: startX, startY: startY, clientX: touch.clientX, clientY: touch.clientY})
   })
   function handleTouchEnd(e) {
     const touch = getMatchingTouch(e)
     if (!touch) return
+    if (e.cancelable) e.preventDefault()
     touchId = null
     handler({type: 'end', startX: startX, startY: startY, clientX: touch.clientX, clientY: touch.clientY})
   }

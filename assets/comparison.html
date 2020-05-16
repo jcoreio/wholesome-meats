@@ -72,7 +72,14 @@
       transform: scaleX(-1);
       right: 0;
     }
-    #right > img {
+    #right > div {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 100vw;
+    }
+    #right img {
       position: absolute;
       right: 0;
     }
@@ -99,6 +106,9 @@
     body.is-adjusting #knob {
       cursor: grabbing;
     }
+    body.show-feed-lot-farm {
+      
+    }
     .sky-gradient {
       position: absolute;
       top: 0;
@@ -106,8 +116,87 @@
       width: 100%;
       height: 13.5vw;
     }
+    .compare-switch {
+      display: inline-block;
+      position: absolute;
+      top: 5.3vw;
+      right: 0;
+      width: 50vw;
+      text-align: center;
+      overflow: visible;
+    }
+    .switch {
+      cursor: pointer;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      width: 17vw;
+      height: 3.2vw;
+      color: #405C69;
+      border-radius: 999px;
+      border: 0.4vw solid currentColor;
+      background-color: currentColor;
+      font-family: "Maison Neue";
+      font-weight: 700;
+      font-size: 1.2vw;
+      vertical-align: middle;
+    }
+    .switch-knob {
+      z-index: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      height: 100%;
+      width: 50%;
+      border-radius: 999px;
+      background-color: #86B6CA;
+      transition: left 0.2s ease;
+    }
+    body.show-feed-lot-farm .switch-knob {
+      left: 50%;
+    }
+    .switch-text {
+      z-index: 1;
+      color: white;
+      flex: 1 1 50%;
+      opacity: 1;
+      transition: opacity 0.2s linear;
+    }
+    body:not(.show-feed-lot-farm) .switch-text-feed-lot {
+      opacity: 0.7;
+    }
+    body.show-feed-lot-farm .switch-text-fake-meat {
+      opacity: 0.7;
+    }
+    .compare-to {
+      text-transform: uppercase;
+      font-family: "Sweet Sans Pro";
+      font-weight: 700;
+      font-size: 1.2vw;
+      color: #003C5B;
+      margin-bottom: 1.2vw;
+    }
+    #right > div {
+      transition-property: visibility, opacity;
+      transition-duration: 0.2s;
+      transition-timing-function: linear;
+    }
+    #feed-lot-farm {
+      visibility: hidden;
+      opacity: 0.01;
+    }
+    body.show-feed-lot-farm #feed-lot-farm {
+      visibility: visible;
+      opacity: 1;
+    }
+    body.show-feed-lot-farm #fake-meat-farm {
+      visibility: hidden;
+      opacity: 0.01;
+    }
   </style>
   <script src="addDragListener.js"></script>
+  <script src="classLists.js"></script>
 </head>
 <body>
   <div id="root">
@@ -116,8 +205,29 @@
       <img class="farm-image" src="ReGen-Ranch.png" />
     </div>
     <div id="right" style="width: 50%">
-      <div class="sky-gradient" style="background: linear-gradient(to top, rgb(115, 160, 179), rgba(115, 160, 179, 0) 100%);"></div>
-      <img class="farm-image" src="Fake-Meat-Farm.png" />
+      <div id="fake-meat-farm">
+        <div class="sky-gradient" style="background: linear-gradient(to top, rgb(115, 160, 179), rgba(115, 160, 179, 0) 100%);"></div>
+        <img class="farm-image" src="Fake-Meat-Farm.png" />
+      </div>
+      <div id="feed-lot-farm">
+        <div class="sky-gradient" style="background: linear-gradient(to top, rgb(234, 209, 204), rgba(234, 209, 204, 0) 100%);"></div>
+        <img class="farm-image" src="Feed-Lot-Farm.png" />
+      </div>
+    </div>
+    <div class="compare-switch">
+      <div class="compare-to">
+        Compare to
+      </div>
+      <div id="switch" class="switch">
+        <div class="switch-knob">
+        </div>
+        <div class="switch-text switch-text-fake-meat">
+          Fake Meat
+        </div>
+        <div class="switch-text switch-text-feed-lot">
+          Feed Lot
+        </div>
+      </div>
     </div>
     <img class="bottom-divider" src="soil-section-divider.png" />
     <img class="bottom-divider right-bottom-divider" src="soil-section-divider.png" />
@@ -131,20 +241,26 @@
   </div>
   <script>
     (function () {
-      const divider = document.getElementById('divider')
-      let startX
+      var divider = document.getElementById('divider')
+      var startX
       addDragListener(document.getElementById('knob'), function (e) {
-        document.body.setAttribute('class', e.type === 'end' ? '' : 'is-adjusting')
+        if (e.type === 'start') addClasses(document.body, 'is-adjusting')
+        if (e.type === 'end') removeClasses(document.body, 'is-adjusting')
         switch (e.type) {
           case 'start':
             startX = divider.getBoundingClientRect().x
             break
           case 'move':
-            const rightWidth = (1 - (startX + e.clientX - e.startX) / window.innerWidth) * 100 + '%'
+            var rightWidth = (1 - (startX + e.clientX - e.startX) / window.innerWidth) * 100 + '%'
             document.getElementById('right').style.width = rightWidth
             divider.style.right = rightWidth
             break
         }
+      })
+
+      var farmSwitch = document.getElementById('switch')
+      farmSwitch.addEventListener('click', function (e) {
+        toggleClass(document.body, 'show-feed-lot-farm')
       })
     })()
   </script>
