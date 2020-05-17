@@ -7,54 +7,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @font-face {
-        font-family: "Maison Neue";
-        font-weight: 700;
-        src: url("MaisonNeue-Bold.ttf");
+      font-family: "Maison Neue";
+      font-weight: 700;
+      src: url("MaisonNeue-Bold.ttf");
     }
     @font-face {
-        font-family: "Maison Neue";
-        font-weight: 500;
-        src: url("MaisonNeue-Medium.ttf");
+      font-family: "Maison Neue";
+      font-weight: 500;
+      src: url("MaisonNeue-Medium.ttf");
     }
     @font-face {
-        font-family: "Recoleta Alt";
-        font-weight: 600;
-        src: url("RecoletaAlt-SemiBold.otf");
+      font-family: "Recoleta Alt";
+      font-weight: 600;
+      src: url("RecoletaAlt-SemiBold.otf");
     }
     @font-face {
-        font-family: "Sweet Sans Pro";
-        font-weight: 700;
-        src: url("SweetSansPro-Bold.otf");
+      font-family: "Sweet Sans Pro";
+      font-weight: 700;
+      src: url("SweetSansPro-Bold.otf");
     }
 
     body {
-        padding: 0;
-        margin: 0;
-        touch-action: none;
+      padding: 0;
+      margin: 0;
+      touch-action: none;
     }
     #root {
-        width: 100%;
-        height: 127vw;
-        position: fixed;
-        top: 0;
-        left: 0;
-        user-select: none;
+      width: 100%;
+      height: 127vw;
+      position: fixed;
+      top: 5vw;
+      left: 0;
+      user-select: none;
     }
     #left {
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
     #right {
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+    #regenerative-ranch {
+      color: #003C5B;
+    }
+    #fake-meat-farm {
+      color: #F5F6E6;
+    }
+    #feed-lot-farm {
+      color: #003C5B;
+    }
+    h1 {
+      text-align: center;
+      font-family: "Recoleta Alt";
+      font-weight: 700;
+      font-size: 3vw;
+      margin-bottom: 0.5vw;
+    }
+    h2 {
+      text-align: center;
+      font-family: "Maison Neue";
+      font-weight: 500;
+      font-size: 1vw;
+      max-width: 30vw;
+      margin: 0.5vw auto;
+    }
+    .compare-side {
+      overflow: hidden;
+    }
+    .compare-side .headings {
+      position: absolute;
+      top: 6vw;
+      width: 50vw;
+    }
+
+    #right .headings {
+      right: 0;
     }
     .farm-image {
       width: 100vw;
@@ -119,7 +155,7 @@
     .compare-switch {
       display: inline-block;
       position: absolute;
-      top: 5.3vw;
+      top: -1vw;
       right: 0;
       width: 50vw;
       text-align: center;
@@ -278,29 +314,41 @@
 </head>
 <body>
   <div id="root">
-    <div id="left">
-      <div class="sky-gradient" style="background: linear-gradient(to top, rgb(158, 213, 205), rgba(158, 213, 205, 0) 100%);"></div>
-      <img class="farm-image" src="ReGen-Ranch.png" />
-      <div class="info-icon" style="left: 14vw; top: 58vw;">
-        <div class="info-bubble">
-          <h6>Healthy Cows</h6>
-          <div class="info-bubble-detail">
-            Livestock is rotationally
-            grazed on chemical free pastures - equally distributing manure and urine across natural grasses.
+    <div id="left" class="compare-side">
+      <div id="regenerative-ranch">
+        <div class="sky-gradient" style="background: linear-gradient(to top, rgb(158, 213, 205), rgba(158, 213, 205, 0) 100%);"></div>
+        <img class="farm-image" src="ReGen-Ranch.png" />
+        <div class="headings">
+          <h1>Regenerative Ranch</h1>
+          <h2>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</h2>
+        </div>
+        <div class="info-icon" style="left: 14vw; top: 58vw;">
+          <div class="info-bubble">
+            <h6>Healthy Cows</h6>
+            <div class="info-bubble-detail">
+              Livestock is rotationally
+              grazed on chemical free pastures - equally distributing manure and urine across natural grasses.
+            </div>
           </div>
         </div>
       </div>
-      <div class="info-icon" style="left: 28vw; top: 68vw;">
-      </div>
     </div>
-    <div id="right" style="width: 50%">
+    <div id="right" class="compare-side" style="width: 50%">
       <div id="fake-meat-farm">
         <div class="sky-gradient" style="background: linear-gradient(to top, rgb(115, 160, 179), rgba(115, 160, 179, 0) 100%);"></div>
         <img class="farm-image" src="Fake-Meat-Farm.png" />
+        <div class="headings">
+          <h1>Fake Meat</h1>
+          <h2>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</h2>
+        </div>
       </div>
       <div id="feed-lot-farm">
         <div class="sky-gradient" style="background: linear-gradient(to top, rgb(234, 209, 204), rgba(234, 209, 204, 0) 100%);"></div>
         <img class="farm-image" src="Feed-Lot-Farm.png" />
+        <div class="headings">
+          <h1>Feed Lot</h1>
+          <h2>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</h2>
+        </div>
       </div>
     </div>
     <div class="compare-switch">
@@ -340,7 +388,10 @@
             startX = divider.getBoundingClientRect().x
             break
           case 'move':
-            var rightWidth = (1 - (startX + e.clientX - e.startX) / window.innerWidth) * 100 + '%'
+            var f = (1 - (startX + e.clientX - e.startX) / window.innerWidth) 
+            var leftWidth = (1 - f) * 100 + '%'
+            var rightWidth = f * 100 + '%'
+            document.getElementById('left').style.width = leftWidth
             document.getElementById('right').style.width = rightWidth
             divider.style.right = rightWidth
             break
