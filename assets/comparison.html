@@ -194,6 +194,84 @@
       visibility: hidden;
       opacity: 0.01;
     }
+    .info-icon {
+      position: absolute;
+      width: 2.3vw;
+      height: 2.3vw;
+      line-height: 2.55vw;
+      background: #00B3C6;
+      box-shadow: 0 0.1vw 0.5vw 0 rgba(0,0,0,0.20);
+      border-radius: 999px;
+      border: none;
+      text-align: center;
+      color: white;
+      font-family: "Maison Neue";
+      font-weight: 700;
+      font-size: 1.4vw;
+      cursor: pointer;
+      transition: color 0.1s linear;
+    }
+    .info-icon::after {
+      content: "+";
+    }
+    .info-icon:hover {
+      color: #00B3C6;
+    }
+    .info-bubble {
+      z-index: 100;
+      position: absolute;
+      width: 20.6vw;
+      height: 14.4vw;
+      background: #00B3C6;
+      border-radius: 1vw;
+      color: white;
+      font-family: "Maison Neue";
+      font-weight: 500;
+      font-size: 1.5vw;
+      line-height: 2vw;
+      padding: 2vw;
+      text-align: left;
+      top: -21.4vw;
+      left: -11.1vw;
+      box-shadow: 0 0.1vw 0.5vw 0 rgba(0,0,0,0.20);
+      visibility: hidden;
+      opacity: 0.01;
+      transform: scale(0.7);
+      transform-origin: bottom;
+      transition-property: visibility, opacity, transform;
+      transition-duration: 0.1s;
+      transition-timing-function: ease,
+    }
+    .info-icon.info-icon-open .info-bubble {
+      visibility: visible;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .info-bubble:before {
+      content:'';
+      display:block;
+      width:0;
+      height:0;
+      font-size: 3vw;
+      position:absolute;
+
+      border-left: 1em solid transparent;
+      border-right: 1em solid transparent;
+      border-top:1em solid #00B3C6;
+      left: 9.3vw;
+
+      bottom:-0.9em;
+    }
+    .info-bubble h6 {
+      margin-top: 1vw;
+      margin-bottom: 1vw;
+      font-family: "Recoleta Alt";
+      font-size: 2vw;
+      font-weight: 700;
+    }
+    .info-bubble .info-bubble-detail {
+      opacity: 0.85;
+    }
   </style>
   <script src="addDragListener.js"></script>
   <script src="classLists.js"></script>
@@ -203,6 +281,17 @@
     <div id="left">
       <div class="sky-gradient" style="background: linear-gradient(to top, rgb(158, 213, 205), rgba(158, 213, 205, 0) 100%);"></div>
       <img class="farm-image" src="ReGen-Ranch.png" />
+      <div class="info-icon" style="left: 14vw; top: 58vw;">
+        <div class="info-bubble">
+          <h6>Healthy Cows</h6>
+          <div class="info-bubble-detail">
+            Livestock is rotationally
+            grazed on chemical free pastures - equally distributing manure and urine across natural grasses.
+          </div>
+        </div>
+      </div>
+      <div class="info-icon" style="left: 28vw; top: 68vw;">
+      </div>
     </div>
     <div id="right" style="width: 50%">
       <div id="fake-meat-farm">
@@ -261,6 +350,20 @@
       var farmSwitch = document.getElementById('switch')
       farmSwitch.addEventListener('click', function (e) {
         toggleClass(document.body, 'show-feed-lot-farm')
+      })
+
+      var infoIcons = Array.prototype.slice.call(document.querySelectorAll('.info-icon'))
+
+      infoIcons.forEach(function (icon) {
+        icon.addEventListener('mouseover', function (e) {
+          addClasses(icon, 'info-icon-open')
+        })
+        icon.addEventListener('mouseout', function (e) {
+          removeClasses(icon, 'info-icon-open')
+        })
+        icon.addEventListener('click', function (e) {
+          addClasses(icon, 'info-icon-open')
+        })
       })
     })()
   </script>

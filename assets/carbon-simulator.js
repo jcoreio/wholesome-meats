@@ -31,7 +31,7 @@
 
   var boost = 'feedLotMeat'
 
-  var carbonBubbles = [...document.querySelectorAll('#Carbon-Bubbles > circle')]
+  var carbonBubbles = Array.prototype.slice.call(document.querySelectorAll('#Carbon-Bubbles > circle'))
 
   function bubbleSize(bubble) {
     var r = parseFloat(bubble.getAttribute('r'))
